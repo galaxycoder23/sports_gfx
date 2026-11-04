@@ -2,7 +2,7 @@ import {Server} from 'socket.io';
 import lowerThirdHandler,{addConnection as lt_addConnection}  from './lowerThirdHandler';
 import graphHandler,{addConnection as graph_addConnection}  from './graphHandler';
 import scoreHandler,{addConnection as score_addConnection}  from './scoreHandler';
-import scoreHandlerBoxing,{addConnection as score_boxing_addConnection}  from './scoreHandlerBoxing';
+import timerHandlerBoxing,{addConnection as timer_boxing_addConnection}  from './timerHandlerBoxing';
 
 const io = new Server({
   cors: {
@@ -13,7 +13,7 @@ const io = new Server({
 lowerThirdHandler();
 graphHandler(); //these might not be needed if we move outside of the init
 scoreHandler();
-scoreHandlerBoxing();
+timerHandlerBoxing();
 
 io.listen(4001);
 console.log("listenting on port 4001")
@@ -23,6 +23,6 @@ io.on("connection", (socket) => {
   lt_addConnection(socket,io);
   graph_addConnection(socket,io);
   score_addConnection(socket,io);
-  score_boxing_addConnection(socket,io);
+  timer_boxing_addConnection(socket,io);
 });
 

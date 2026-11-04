@@ -4,6 +4,8 @@ import { socket } from "../socket";
 export interface TimerBoxing {
   participant_a: string;
   participant_b: string;
+  colour_a: string;
+  colour_b: string;
   active: boolean;
   round: string;
   start_time: number;
@@ -11,7 +13,7 @@ export interface TimerBoxing {
 
 export default function TimerControlBoxing() {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [state, setState] = useState<TimerBoxing>({ participant_a: "", participant_b: "", active: false, round: "", start_time: 0 });
+  const [state, setState] = useState<TimerBoxing>({ participant_a: "", participant_b: "", colour_a: "#ff0000ff", colour_b: "#ff0000ff", active: false, round: "", start_time: 0 });
   const [time, setTime] = useState(0); // 2 minutes in seconds
 
   function updateTime(){
@@ -36,15 +38,15 @@ export default function TimerControlBoxing() {
       setState(msg);
     }
 
-    socket.on("score_state", onState);
+    socket.on("timer_state", onState);
 
     return () => {
-      socket.off("score_state", onState);
+      socket.off("timer_state", onState);
     };
   }, []);
 
   function setStateViaSocket(state: TimerBoxing) {
-    socket.emit("score_update", state);
+    socket.emit("timer_update", state);
   }
 
   function setStartTimeToNow() {
@@ -94,27 +96,51 @@ export default function TimerControlBoxing() {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="participant_a">
               Participant A
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="participant_a"
-              type="text"
-              value={state?.participant_a || ""}
-              onChange={(e) => setStateViaSocket({ ...state, participant_a: e.target.value } as TimerBoxing)}
-              disabled={!isEditMode}
-            />
+            <div className="flex gap-2">
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="participant_a"
+                  type="text"
+                  value={state?.participant_a || ""}
+                  onChange={(e) => setStateViaSocket({ ...state, participant_a: e.target.value } as TimerBoxing)}
+                  disabled={!isEditMode}
+                />
+                <input
+                  className="shadow appearance-none border rounded h-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="colour_a"
+                  type="color"
+                  value={state?.colour_a || ""}
+                  onChange={(e) => {
+                    const newState = { ...state, colour_a: e.target.value } as TimerBoxing;
+                    setState(newState);           // update local state immediately
+                    setStateViaSocket(newState);  // emit via socket
+                  }}
+                  disabled={!isEditMode}
+                />
+            </div>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="participant_b">
               Participant B
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="participant_b"
-              type="text"
-              value={state?.participant_b || ""}
-              onChange={(e) => setStateViaSocket({ ...state, participant_b: e.target.value } as TimerBoxing)}
-              disabled={!isEditMode}
-            />
+            <div className="flex gap-2">
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="participant_b"
+                  type="text"
+                  value={state?.participant_b || ""}
+                  onChange={(e) => setStateViaSocket({ ...state, participant_b: e.target.value } as TimerBoxing)}
+                  disabled={!isEditMode}
+                />
+                <input
+                  className="shadow appearance-none border rounded h-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="colour_b"
+                  type="color"
+                  value={state?.colour_b || ""}
+                  onChange={(e) => setStateViaSocket({ ...state, colour_b: e.target.value } as TimerBoxing)}
+                  disabled={!isEditMode}
+                />
+            </div>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="round">
