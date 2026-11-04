@@ -39,7 +39,7 @@ export default function Landing() {
   return (
     <div className="mx-auto max-w-5xl p-6">
       <h1 className="mb-8 text-4xl font-bold">
-        xpLosION Graphics
+        Guild TV Sports Graphics
       </h1>
 
       <div className="mb-8 rounded-lg border p-5">
