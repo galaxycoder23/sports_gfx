@@ -2,7 +2,7 @@
     --box-padding-right: 500px;
     --box-height: 60px;
     --box-bottom: 100px;
-    --grey-height: 45px;
+    --grey-height: 60px;
     --top-pos:250px;
   }
 
@@ -12,8 +12,8 @@
     left:0px;
     width: calc(100vw - 2 * var(--box-padding-right));
     height: var(--box-height);
-    background-color: #852121;
-    
+    background-color: #1B1B1B;
+    border-bottom: 5px solid #C59A00;
   }
 
   #greyBar {
@@ -58,7 +58,7 @@
   }
 
   #mask{
-    font-family: "Helvetica";
+    font-family: "Manrope";
     height:calc(var(--box-height) + var(--grey-height) + 2px);
     bottom:var(--box-bottom);
     left: var(--box-padding-right);
