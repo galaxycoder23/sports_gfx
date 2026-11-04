@@ -1,80 +1,90 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router';
-import Control from './pages/lt_control.tsx';
-import LowerThirdGraphic from './pages/lt_graphic.tsx';
-import GraphControl from './pages/graph_control.tsx';
-import GraphGraphic from './pages/graph_graphic.tsx';
-import Landing from './pages/landing.tsx';
-import ScoreGraphic from './pages/score_graphic.tsx';
-import ScoreControl from './pages/score_control.tsx';
-import LowerThirdGraphicNetball from './pages/lt_graphic_netball.tsx';
-import GraphGraphicNetball from './pages/graph_graphic_netball.tsx';
-import LowerThirdGraphicAmericanFootball from './pages/lt_graphic_american_football.tsx';
-import GraphGraphicAmericanFootball from './pages/graph_graphic_american_football.tsx';
-import TimerGraphicBoxing from './pages/timer_graphic_boxing.tsx';
-import TimerControlBoxing from './pages/timer_control_boxing.tsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router";
+
+import "./index.css";
+
+import Landing from "./pages/landing";
+
+import Control from "./pages/lt_control";
+import GraphControl from "./pages/graph_control";
+import ScoreControl from "./pages/score_control";
+import TimerControlBoxing from "./pages/timer_control_boxing";
+
+import LowerThirdGraphic from "./pages/lt_graphic";
+import LowerThirdGraphicNetball from "./pages/lt_graphic_netball";
+import LowerThirdGraphicAmericanFootball from "./pages/lt_graphic_american_football";
+
+import GraphGraphic from "./pages/graph_graphic";
+import GraphGraphicNetball from "./pages/graph_graphic_netball";
+import GraphGraphicAmericanFootball from "./pages/graph_graphic_american_football";
+
+import ScoreGraphic from "./pages/score_graphic";
+import TimerGraphicBoxing from "./pages/timer_graphic_boxing";
+
+const graphicRoutes = [
+  {
+    suffix: "",
+    lowerThird: LowerThirdGraphic,
+    graph: GraphGraphic,
+  },
+  {
+    suffix: "_netball",
+    lowerThird: LowerThirdGraphicNetball,
+    graph: GraphGraphicNetball,
+  },
+  {
+    suffix: "_american_football",
+    lowerThird: LowerThirdGraphicAmericanFootball,
+    graph: GraphGraphicAmericanFootball,
+  },
+];
 
 const router = createBrowserRouter([
-
   {
     path: "/lt_control",
-    element: <Control/>,
-  },
-  {
-    path: "/lt",
-    element: <LowerThirdGraphic/>,
-  },
-  {
-    path: "/lt_netball",
-    element: <LowerThirdGraphicNetball/>,
-  },
-    {
-    path: "/lt_american_football",
-    element: <LowerThirdGraphicAmericanFootball/>,
+    element: <Control />,
   },
   {
     path: "/graph_control",
-    element: <GraphControl/>,
-  },
-
-  {
-    path: "/graph",
-    element: <GraphGraphic/>,
-  },  
-  {
-    path: "/graph_netball",
-    element: <GraphGraphicNetball/>,
-  },  
-    {
-    path: "/graph_american_football",
-    element: <GraphGraphicAmericanFootball/>,
-  },  
-  {
-    path: "/score",
-    element: <ScoreGraphic/>,
+    element: <GraphControl />,
   },
   {
     path: "/score_control",
-    element: <ScoreControl/>,
-  },
-  {
-    path: "/timer_boxing",
-    element: <TimerGraphicBoxing/>,
+    element: <ScoreControl />,
   },
   {
     path: "/timer_control_boxing",
-    element: <TimerControlBoxing/>,
+    element: <TimerControlBoxing />,
+  },
+
+  ...graphicRoutes.flatMap((route) => [
+    {
+      path: `/lt${route.suffix}`,
+      element: <route.lowerThird />,
+    },
+    {
+      path: `/graph${route.suffix}`,
+      element: <route.graph />,
+    },
+  ]),
+
+  {
+    path: "/score",
+    element: <ScoreGraphic />,
+  },
+  {
+    path: "/timer_boxing",
+    element: <TimerGraphicBoxing />,
   },
   {
     path: "*",
-    element: <Landing/>,
+    element: <Landing />,
   },
 ]);
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>,
-)
+);
