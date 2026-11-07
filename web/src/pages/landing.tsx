@@ -33,7 +33,9 @@ const controls = [
   ['Timer Control', '/timer_control_boxing'],
 ]
 
-const standalone = [['Score Graphic', '/score']]
+const standalone = [
+  ['Score Graphic', '/score'],
+]
 
 export default function Landing() {
   return (

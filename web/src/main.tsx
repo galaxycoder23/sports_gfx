@@ -51,7 +51,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/score_control",
-    element: <ScoreControl />,
+    element: <ScoreControl/>,
+  },
+  {
+    path: "/timer_boxing",
+    element: <TimerGraphicBoxing/>,
   },
   {
     path: "/timer_control_boxing",
@@ -72,10 +76,6 @@ const router = createBrowserRouter([
   {
     path: "/score",
     element: <ScoreGraphic />,
-  },
-  {
-    path: "/timer_boxing",
-    element: <TimerGraphicBoxing />,
   },
   {
     path: "*",
