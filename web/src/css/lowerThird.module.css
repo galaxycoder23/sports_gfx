@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
 #mask {
   /* Global Variables */
   --box-padding-right: 500px;
@@ -7,7 +9,7 @@
   --top-pos: 250px;
   --name-top: 10px;
 
-  font-family: "HelveticaBold";
+  font-family: "Manrope";
   height: calc(var(--box-height) + var(--grey-height) + 2px);
   bottom: var(--box-bottom);
   left: var(--box-padding-right);

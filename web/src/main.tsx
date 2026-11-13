@@ -10,7 +10,7 @@ import Control from "./pages/lt_control";
 import GraphControl from "./pages/graph_control";
 import ScoreControl from "./pages/score_control";
 import ScoreControlAmericanFootball from "./pages/score_control_american_football";
-import TimerControlBoxing from "./pages/timer_control_boxing";
+import ScoreControlBoxing from "./pages/score_control_boxing";
 
 import LowerThirdGraphic from "./pages/lt_graphic";
 import LowerThirdGraphicNetball from "./pages/lt_graphic_netball";
@@ -22,7 +22,7 @@ import GraphGraphicAmericanFootball from "./pages/graph_graphic_american_footbal
 
 import ScoreGraphic from "./pages/score_graphic";
 import ScoreGraphicAmericanFootball from "./pages/score_graphic_american_football";
-import TimerGraphicBoxing from "./pages/timer_graphic_boxing";
+import ScoreGraphicBoxing from "./pages/score_graphic_boxing";
 
 const graphicRoutes = [
   {
@@ -60,8 +60,8 @@ const router = createBrowserRouter([
   element: <ScoreControlAmericanFootball />,
   },
   {
-    path: "/timer_control_boxing",
-    element: <TimerControlBoxing />,
+    path: "/score_control_boxing",
+    element: <ScoreControlBoxing />,
   },
 
   ...graphicRoutes.flatMap((route) => [
@@ -80,12 +80,12 @@ const router = createBrowserRouter([
     element: <ScoreGraphic />,
   },
   {
-  path: "/score_american_football",
-  element: <ScoreGraphicAmericanFootball />,
+    path: "/score_american_football",
+    element: <ScoreGraphicAmericanFootball />,
   },
   {
-    path: "/timer_boxing",
-    element: <TimerGraphicBoxing/>,
+    path: "/score_boxing",
+    element: <ScoreGraphicBoxing/>,
   },
   {
     path: "*",

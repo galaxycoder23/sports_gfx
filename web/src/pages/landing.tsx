@@ -19,11 +19,12 @@ const sports = [
     links: [
       ['Lower Third', '/lt_american_football'],
       ['Graph', '/graph_american_football'],
+      ['Score', '/score_american_football'],
     ],
   },
   {
     name: 'Boxing',
-    links: [['Score Graphic', '/timer_boxing']],
+    links: [['Score', '/score_boxing']],
   },
 ]
 
@@ -31,7 +32,7 @@ const controls = [
   ['Lower Third Control', '/lt_control'],
   ['Graph Control', '/graph_control'],
   ['Score Control', '/score_control'],
-  ['Boxing Score Control', '/timer_control_boxing'],
+  ['Boxing Score Control', '/score_control_boxing'],
   ['American Football Score Control', '/score_control_american_football'],
 ]
 

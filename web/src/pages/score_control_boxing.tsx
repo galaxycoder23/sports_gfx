@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
 
-export interface TimerBoxing {
+export interface ScoreBoxing {
   participant_a: string;
   participant_b: string;
   colour_a: string;
@@ -11,12 +11,12 @@ export interface TimerBoxing {
   start_time: number;
 }
 
-export default function TimerControlBoxing() {
+export default function ScoreControl() {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [state, setState] = useState<TimerBoxing>({ participant_a: "", participant_b: "", colour_a: "#ff0000ff", colour_b: "#ff0000ff", active: false, round: "", start_time: 0 });
+  const [state, setState] = useState<ScoreBoxing>({ participant_a: "", participant_b: "", colour_a: "#ff0000ff", colour_b: "#ff0000ff", active: false, round: "", start_time: 0 });
   const [time, setTime] = useState(0); // 2 minutes in seconds
 
-  function updateTime(){
+  function updateTime() {
     setTime((state.start_time) - Math.floor(Date.now() / 1000) + 120);
   }
 
@@ -29,7 +29,7 @@ export default function TimerControlBoxing() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [state.start_time]); 
+  }, [state.start_time]);
 
   useEffect(() => {
 
@@ -45,24 +45,25 @@ export default function TimerControlBoxing() {
     };
   }, []);
 
-  function setStateViaSocket(state: TimerBoxing) {
-    socket.emit("timer_update", state);
-  }
+function setStateViaSocket(newState: ScoreBoxing) {
+    setState(newState);
+    socket.emit("timer_update", newState);
+}
 
   function setStartTimeToNow() {
     const now = Math.floor(Date.now() / 1000);
-    setStateViaSocket({ ...state, start_time: now } as TimerBoxing);
+    setStateViaSocket({ ...state, start_time: now } as ScoreBoxing);
   }
 
   function incrementStartTime(seconds: number) {
-    setStateViaSocket({ ...state, start_time: (state.start_time || 0) + seconds } as TimerBoxing);
+    setStateViaSocket({ ...state, start_time: (state.start_time || 0) + seconds } as ScoreBoxing);
   }
 
   return (
     <>
       <div className="flex bg-slate-200">
         <div className="p-4 w-full max-w-md mx-auto">
-        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4">
             <button
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
@@ -80,7 +81,7 @@ export default function TimerControlBoxing() {
               >
                 +5s
               </button>
-              <span className="mx-4 text-xl">{Math.floor(Math.max(time,0) / 60)}:{String(Math.max(time,0) % 60).padStart(2, "0")}</span>
+              <span className="mx-4 text-xl">{Math.floor(Math.max(time, 0) / 60)}:{String(Math.max(time, 0) % 60).padStart(2, "0")}</span>
               <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
@@ -97,26 +98,34 @@ export default function TimerControlBoxing() {
               Participant A
             </label>
             <div className="flex gap-2">
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="participant_a"
-                  type="text"
-                  value={state?.participant_a || ""}
-                  onChange={(e) => setStateViaSocket({ ...state, participant_a: e.target.value } as TimerBoxing)}
-                  disabled={!isEditMode}
-                />
-                <input
-                  className="shadow appearance-none border rounded h-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="colour_a"
-                  type="color"
-                  value={state?.colour_a || ""}
-                  onChange={(e) => {
-                    const newState = { ...state, colour_a: e.target.value } as TimerBoxing;
-                    setState(newState);           // update local state immediately
-                    setStateViaSocket(newState);  // emit via socket
-                  }}
-                  disabled={!isEditMode}
-                />
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="participant_a"
+                type="text"
+                value={state?.participant_a || ""}
+                onChange={(e) => {
+                  const newState = {
+                    ...state,
+                    participant_a: e.target.value
+                  };
+
+                  setState(newState);
+                  setStateViaSocket(newState);
+                }}
+                disabled={!isEditMode}
+              />
+              <input
+                className="shadow appearance-none border rounded h-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="colour_a"
+                type="color"
+                value={state?.colour_a || ""}
+                onChange={(e) => {
+                  const newState = { ...state, colour_a: e.target.value } as ScoreBoxing;
+                  setState(newState);           // update local state immediately
+                  setStateViaSocket(newState);  // emit via socket
+                }}
+                disabled={!isEditMode}
+              />
             </div>
           </div>
           <div className="mb-4">
@@ -124,22 +133,22 @@ export default function TimerControlBoxing() {
               Participant B
             </label>
             <div className="flex gap-2">
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="participant_b"
-                  type="text"
-                  value={state?.participant_b || ""}
-                  onChange={(e) => setStateViaSocket({ ...state, participant_b: e.target.value } as TimerBoxing)}
-                  disabled={!isEditMode}
-                />
-                <input
-                  className="shadow appearance-none border rounded h-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="colour_b"
-                  type="color"
-                  value={state?.colour_b || ""}
-                  onChange={(e) => setStateViaSocket({ ...state, colour_b: e.target.value } as TimerBoxing)}
-                  disabled={!isEditMode}
-                />
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="participant_b"
+                type="text"
+                value={state?.participant_b || ""}
+                onChange={(e) => setStateViaSocket({ ...state, participant_b: e.target.value } as ScoreBoxing)}
+                disabled={!isEditMode}
+              />
+              <input
+                className="shadow appearance-none border rounded h-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="colour_b"
+                type="color"
+                value={state?.colour_b || ""}
+                onChange={(e) => setStateViaSocket({ ...state, colour_b: e.target.value } as ScoreBoxing)}
+                disabled={!isEditMode}
+              />
             </div>
           </div>
           <div className="mb-4">
@@ -150,7 +159,7 @@ export default function TimerControlBoxing() {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="round"
               value={state?.round || ""}
-              onChange={(e) => setStateViaSocket({ ...state, round: e.target.value } as TimerBoxing)}
+              onChange={(e) => setStateViaSocket({ ...state, round: e.target.value } as ScoreBoxing)}
               disabled={!isEditMode}
             >
               <option value="">Select Round</option>
@@ -159,7 +168,7 @@ export default function TimerControlBoxing() {
               <option value="3 of 3">Round 3</option>
             </select>
           </div>
-        
+
           <div className="flex items-center justify-between">
             <button
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
