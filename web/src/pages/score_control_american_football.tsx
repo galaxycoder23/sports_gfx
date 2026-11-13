@@ -47,19 +47,6 @@ export default function ScoreControl() {
     socket.emit("score_update", state);
   }
 
-  function changeScore(team: "a" | "b", amount: number) {
-    const key = team === "a"
-      ? "score_a"
-      : "score_b";
-
-    update({
-      [key]: Math.max(
-        0,
-        state[key] + amount
-      ),
-    });
-  }
-
   function addTouchdown(team: "a" | "b") {
     update({
       [`score_${team}`]:
