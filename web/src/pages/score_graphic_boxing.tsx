@@ -7,8 +7,8 @@ export default function ScoreGraphic() {
   const [state, setState] = useState<ScoreBoxing>({
     participant_a: "",
     participant_b: "",
-    colour_a: "#ff0000",
-    colour_b: "#ff0000",
+    colour_a: "#0057BF",
+    colour_b: "#F07F3C",
     active: false,
     round: "",
     start_time: 0,

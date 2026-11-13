@@ -13,7 +13,7 @@ export interface ScoreBoxing {
 
 export default function ScoreControl() {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [state, setState] = useState<ScoreBoxing>({ participant_a: "", participant_b: "", colour_a: "#ff0000", colour_b: "#ff0000", active: false, round: "", start_time: 0 });
+  const [state, setState] = useState<ScoreBoxing>({ participant_a: "", participant_b: "", colour_a: "#0057BF", colour_b: "#F07F3C", active: false, round: "", start_time: 0 });
   const [time, setTime] = useState(0); // 2 minutes in seconds
 
   function updateTime() {
