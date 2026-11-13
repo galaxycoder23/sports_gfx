@@ -1,0 +1,40 @@
+name: Build and deployment
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: sports-gfx-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up SSH
+        env:
+          RSA_PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
+          DEPLOY_IP: ${{ secrets.DEPLOY_IP }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$RSA_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          ssh-keyscan -H "$DEPLOY_IP" >> ~/.ssh/known_hosts
+
+      - name: Deploy application
+        env:
+          DEPLOY_IP: ${{ secrets.DEPLOY_IP }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          ssh -i ~/.ssh/id_rsa \
+            "$DEPLOY_USER@$DEPLOY_IP" \
+            'cd /home/ubuntu/sports_gfx &&
+             git pull --ff-only origin main &&
+             docker compose up -d --build'
