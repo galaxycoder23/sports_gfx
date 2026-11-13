@@ -9,6 +9,7 @@ import Landing from "./pages/landing";
 import Control from "./pages/lt_control";
 import GraphControl from "./pages/graph_control";
 import ScoreControl from "./pages/score_control";
+import ScoreControlAmericanFootball from "./pages/score_control_american_football";
 import TimerControlBoxing from "./pages/timer_control_boxing";
 
 import LowerThirdGraphic from "./pages/lt_graphic";
@@ -20,6 +21,7 @@ import GraphGraphicNetball from "./pages/graph_graphic_netball";
 import GraphGraphicAmericanFootball from "./pages/graph_graphic_american_football";
 
 import ScoreGraphic from "./pages/score_graphic";
+import ScoreGraphicAmericanFootball from "./pages/score_graphic_american_football";
 import TimerGraphicBoxing from "./pages/timer_graphic_boxing";
 
 const graphicRoutes = [
@@ -54,8 +56,8 @@ const router = createBrowserRouter([
     element: <ScoreControl/>,
   },
   {
-    path: "/timer_boxing",
-    element: <TimerGraphicBoxing/>,
+  path: "/score_control_american_football",
+  element: <ScoreControlAmericanFootball />,
   },
   {
     path: "/timer_control_boxing",
@@ -76,6 +78,14 @@ const router = createBrowserRouter([
   {
     path: "/score",
     element: <ScoreGraphic />,
+  },
+  {
+  path: "/score_american_football",
+  element: <ScoreGraphicAmericanFootball />,
+  },
+  {
+    path: "/timer_boxing",
+    element: <TimerGraphicBoxing/>,
   },
   {
     path: "*",

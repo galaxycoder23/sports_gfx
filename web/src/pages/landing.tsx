@@ -1,9 +1,10 @@
 const sports = [
   {
-    name: 'Generic Sports',
+    name: 'General',
     links: [
       ['Lower Third', '/lt'],
       ['Graph', '/graph'],
+      ['Score', '/score'],
     ],
   },
   {
@@ -22,7 +23,7 @@ const sports = [
   },
   {
     name: 'Boxing',
-    links: [['Timer Graphic', '/timer_boxing']],
+    links: [['Score Graphic', '/timer_boxing']],
   },
 ]
 
@@ -30,11 +31,8 @@ const controls = [
   ['Lower Third Control', '/lt_control'],
   ['Graph Control', '/graph_control'],
   ['Score Control', '/score_control'],
-  ['Timer Control', '/timer_control_boxing'],
-]
-
-const standalone = [
-  ['Score Graphic', '/score'],
+  ['Boxing Score Control', '/timer_control_boxing'],
+  ['American Football Score Control', '/score_control_american_football'],
 ]
 
 export default function Landing() {
@@ -85,24 +83,6 @@ export default function Landing() {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-8 rounded-lg border p-5">
-        <h2 className="mb-4 text-2xl font-bold">
-          Standalone Graphics
-        </h2>
-
-        <div className="flex flex-col gap-2">
-          {standalone.map(([label, href]) => (
-            <a
-              key={href}
-              href={href}
-              className="rounded border p-3 hover:bg-slate-100"
-            >
-              {label}
-            </a>
-          ))}
-        </div>
       </div>
     </div>
   )
