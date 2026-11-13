@@ -26,6 +26,10 @@ const sports = [
     name: 'Boxing',
     links: [['Score', '/score_boxing']],
   },
+    {
+    name: 'Rugby',
+    links: [['Score', '/score_rugby']],
+  },
 ]
 
 const controls = [
@@ -34,6 +38,7 @@ const controls = [
   ['Score Control', '/score_control'],
   ['Boxing Score Control', '/score_control_boxing'],
   ['American Football Score Control', '/score_control_american_football'],
+  ['Rugby Score Control', '/score_control_rugby'],
 ]
 
 export default function Landing() {

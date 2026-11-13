@@ -3,6 +3,7 @@ import lowerThirdHandler,{addConnection as lt_addConnection}  from './lowerThird
 import graphHandler,{addConnection as graph_addConnection}  from './graphHandler';
 import scoreHandler,{addConnection as score_addConnection}  from './scoreHandler';
 import timerHandlerBoxing,{addConnection as score_boxing_addConnection}  from './timerHandlerBoxing';
+import scoreHandlerRugby,{addConnection as score_rugby_addConnection}  from './scoreHandlerRugby';
 
 const io = new Server({
   cors: {
@@ -14,6 +15,7 @@ lowerThirdHandler();
 graphHandler(); //these might not be needed if we move outside of the init
 scoreHandler();
 timerHandlerBoxing();
+scoreHandlerRugby();
 
 io.listen(4001);
 console.log("listenting on port 4001")
@@ -24,5 +26,6 @@ io.on("connection", (socket) => {
   graph_addConnection(socket,io);
   score_addConnection(socket,io);
   score_boxing_addConnection(socket,io);
+  score_rugby_addConnection(socket,io);
 });
 

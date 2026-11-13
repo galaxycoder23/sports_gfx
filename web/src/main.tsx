@@ -11,6 +11,7 @@ import GraphControl from "./pages/graph_control";
 import ScoreControl from "./pages/score_control";
 import ScoreControlAmericanFootball from "./pages/score_control_american_football";
 import ScoreControlBoxing from "./pages/score_control_boxing";
+import ScoreControlRugby from "./pages/score_control_rugby";
 
 import LowerThirdGraphic from "./pages/lt_graphic";
 import LowerThirdGraphicNetball from "./pages/lt_graphic_netball";
@@ -23,6 +24,7 @@ import GraphGraphicAmericanFootball from "./pages/graph_graphic_american_footbal
 import ScoreGraphic from "./pages/score_graphic";
 import ScoreGraphicAmericanFootball from "./pages/score_graphic_american_football";
 import ScoreGraphicBoxing from "./pages/score_graphic_boxing";
+import ScoreGraphicRugby from "./pages/score_graphic_rugby";
 
 const graphicRoutes = [
   {
@@ -63,6 +65,10 @@ const router = createBrowserRouter([
     path: "/score_control_boxing",
     element: <ScoreControlBoxing />,
   },
+  {
+    path: "/score_control_rugby",
+    element: <ScoreControlRugby />,
+  },
 
   ...graphicRoutes.flatMap((route) => [
     {
@@ -86,6 +92,10 @@ const router = createBrowserRouter([
   {
     path: "/score_boxing",
     element: <ScoreGraphicBoxing/>,
+  },
+  {
+    path: "/score_rugby",
+    element: <ScoreGraphicRugby />,
   },
   {
     path: "*",
