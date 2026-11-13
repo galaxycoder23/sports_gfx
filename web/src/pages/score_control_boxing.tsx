@@ -13,7 +13,7 @@ export interface ScoreBoxing {
 
 export default function ScoreControl() {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [state, setState] = useState<ScoreBoxing>({ participant_a: "", participant_b: "", colour_a: "#ff0000ff", colour_b: "#ff0000ff", active: false, round: "", start_time: 0 });
+  const [state, setState] = useState<ScoreBoxing>({ participant_a: "", participant_b: "", colour_a: "#ff0000", colour_b: "#ff0000", active: false, round: "", start_time: 0 });
   const [time, setTime] = useState(0); // 2 minutes in seconds
 
   function updateTime() {
@@ -103,27 +103,16 @@ function setStateViaSocket(newState: ScoreBoxing) {
                 id="participant_a"
                 type="text"
                 value={state?.participant_a || ""}
-                onChange={(e) => {
-                  const newState = {
-                    ...state,
-                    participant_a: e.target.value
-                  };
-
-                  setState(newState);
-                  setStateViaSocket(newState);
-                }}
+                onChange={(e) => setStateViaSocket({ ...state, participant_a: e.target.value } as ScoreBoxing)}
                 disabled={!isEditMode}
               />
               <input
-                className="shadow appearance-none border rounded h-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="border rounded w-10 h-10 cursor-pointer"
                 id="colour_a"
                 type="color"
                 value={state?.colour_a || ""}
-                onChange={(e) => {
-                  const newState = { ...state, colour_a: e.target.value } as ScoreBoxing;
-                  setState(newState);           // update local state immediately
-                  setStateViaSocket(newState);  // emit via socket
-                }}
+                onChange={(e) => setStateViaSocket({ ...state, colour_a: e.target.value } as ScoreBoxing)}
+
                 disabled={!isEditMode}
               />
             </div>
@@ -142,7 +131,7 @@ function setStateViaSocket(newState: ScoreBoxing) {
                 disabled={!isEditMode}
               />
               <input
-                className="shadow appearance-none border rounded h-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="border rounded w-10 h-10 cursor-pointer"
                 id="colour_b"
                 type="color"
                 value={state?.colour_b || ""}

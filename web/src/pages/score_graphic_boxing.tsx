@@ -7,8 +7,8 @@ export default function ScoreGraphic() {
   const [state, setState] = useState<ScoreBoxing>({
     participant_a: "",
     participant_b: "",
-    colour_a: "#ff0000ff",
-    colour_b: "#ff0000ff",
+    colour_a: "#ff0000",
+    colour_b: "#ff0000",
     active: false,
     round: "",
     start_time: 0,
@@ -46,14 +46,20 @@ export default function ScoreGraphic() {
   return (
     <div id={style.mask}>
       <div id={style.scorebar}>
-        <div className={style.participantAColour}></div>
+        <div
+          className={style.participantAColour}
+          style={{ backgroundColor: state.colour_a }}
+        ></div>
         <div className={style.participantName}>{state.participant_a}</div>
         <div className={style.time}>
           {Math.floor(Math.max(time, 0) / 60)}:{String(Math.max(time, 0) % 60).padStart(2, "0")}
         </div>
         <div className={style.round}>{state.round}</div>
         <div className={style.participantName}>{state.participant_b}</div>
-        <div className={style.participantBColour}></div>
+        <div
+          className={style.participantBColour}
+          style={{ backgroundColor: state.colour_b }}
+        ></div>
       </div>
     </div>
   );
